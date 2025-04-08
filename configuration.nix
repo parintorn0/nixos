@@ -15,7 +15,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
  
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot.supportedFilesystems = ["ntfs"];
   fileSystems."/run/media/user/Shared Volume" =
@@ -107,6 +106,14 @@
     polkitPolicyOwners = [ "user" ];
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+
   # Gnome Exclude Packages
   environment.gnome.excludePackages = (
     with pkgs; [
@@ -152,11 +159,25 @@
     mullvad-browser
     mullvad-vpn
     protonmail-bridge-gui
-    dotnetCorePackages.sdk_9_0_1xx 
+    dotnetCorePackages.sdk_9_0_1xx
+    flutter 
   #  wget
   ];
 
-  services.protonmail-bridge.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [nvidia-vaapi-driver];
+  };
+
+  hardware.nvidia.open = false; # Set to false to use the proprietary kernel module
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    nvidiaBusId = "PCI:1:0:0";
+    amdgpuBusId = "PCI:6:0:0";
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
