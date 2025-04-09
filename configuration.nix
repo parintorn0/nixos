@@ -14,14 +14,18 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
- 
 
   boot.supportedFilesystems = ["ntfs"];
-  fileSystems."/run/media/user/Shared Volume" =
-    { device = "/dev/nvme1n1p1";
-      fsType = "ntfs-3g"; 
-      options = [ "rw" "uid=1000"];
-    };
+  fileSystems."/run/media/user/Shared Volume" = {
+    device = "/dev/nvme1n1p1";
+    fsType = "ntfs-3g"; 
+    options = [ "rw" "uid=1000"];
+  };
+  fileSystems."/run/media/user/Windows Volume" = {
+    device = "/dev/nvme0n1p3";
+    fsType = "ntfs-3g"; 
+    options = [ "rw" "uid=1000"];
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -63,6 +67,9 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.excludePackages = [
+    pkgs.xterm
+  ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -135,8 +142,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       flatpak
-      sassc
-    #  thunderbird
     ];
   };
 
@@ -147,6 +152,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
     ntfs3g
     git
     firefox-esr
@@ -158,9 +164,14 @@
     brave
     mullvad-browser
     mullvad-vpn
+    tor-browser
+    discord
     protonmail-bridge-gui
+    spotify
+    davinci-resolve
     dotnetCorePackages.sdk_9_0_1xx
-    flutter 
+    flutter
+    flutterPackages-source.stable 
   #  wget
   ];
 
@@ -177,6 +188,9 @@
     nvidiaBusId = "PCI:1:0:0";
     amdgpuBusId = "PCI:6:0:0";
   };
+  services.switcherooControl.enable = true;
+
+  virtualisation.podman.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
