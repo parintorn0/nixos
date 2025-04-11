@@ -12,9 +12,12 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 5;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
-
+  
   boot.supportedFilesystems = ["ntfs"];
   fileSystems."/run/media/user/Shared Volume" = {
     device = "/dev/nvme1n1p1";
@@ -153,8 +156,10 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    tree
     ntfs3g
     git
+    appimage-run
     firefox-esr
     gnome-software
     gnome-tweaks
