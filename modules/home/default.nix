@@ -1,6 +1,6 @@
 {
   imports = [
     ./git.nix
-    ./theme.nix
+    ./theme
   ];
 }

@@ -19,7 +19,9 @@
   gtk = {
     enable = true;
     cursorTheme = {
-      name = "Adwaita";
+      name = "Vimix-Cursors-White";
+      package = pkgs.vimix-cursor-theme;
+      size = 30;
     };
     theme = {
       name = "Orchis-Pink-Dark-Compact";
