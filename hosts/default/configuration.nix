@@ -2,14 +2,17 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nextdns.nix
+      inputs.home-manager.nixosModules.default
+      ../../modules/nixos
     ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.systemd-boot = {
@@ -145,7 +148,14 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       flatpak
-    ];
+   ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "user" = import ./home.nix;
+    };
   };
 
   # Allow unfree packages
@@ -156,9 +166,9 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     neovim
+    killall
     tree
     ntfs3g
-    git
     appimage-run
     firefox-esr
     gnome-software
@@ -174,10 +184,7 @@
     protonmail-bridge-gui
     spotify
     davinci-resolve
-    dotnetCorePackages.sdk_9_0_1xx
-    flutter
-    flutterPackages-source.stable 
-  #  wget
+    #  wget
   ];
 
   services.xserver.videoDrivers = ["nvidia"];
