@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  vimixCursorTheme = {
+    name = "Vimix-Cursors-White";
+    package = pkgs.vimix-cursor-theme;
+    size = 30;
+  };
+in
 {
   programs.gnome-shell = {
     enable = true;
@@ -18,11 +25,7 @@
   };
   gtk = {
     enable = true;
-    cursorTheme = {
-      name = "Vimix-Cursors-White";
-      package = pkgs.vimix-cursor-theme;
-      size = 30;
-    };
+    cursorTheme = vimixCursorTheme;
     theme = {
       name = "Orchis-Pink-Dark-Compact";
       package = pkgs.orchis-theme.override {
@@ -36,10 +39,8 @@
       };
     };
   };
-  home.pointerCursor = {
+  
+  home.pointerCursor = vimixCursorTheme // {
     enable = true;
-    name = "Vimix-Cursors-White";
-    package = pkgs.vimix-cursor-theme;
-    size = 30;
   };
 }
