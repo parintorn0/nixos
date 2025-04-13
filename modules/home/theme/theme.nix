@@ -36,4 +36,10 @@
       };
     };
   };
+  home.pointerCursor = {
+    enable = true;
+    name = "Vimix-Cursors-White";
+    package = pkgs.vimix-cursor-theme;
+    size = 30;
+  };
 }
