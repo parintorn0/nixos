@@ -26,15 +26,15 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   
   boot.supportedFilesystems = ["ntfs"];
-  fileSystems."/run/media/user/Shared Volume" = {
-    device = "/dev/nvme1n1p1";
-    fsType = "ntfs-3g"; 
-    options = [ "rw" "uid=1000"];
-  };
   fileSystems."/run/media/user/Windows Volume" = {
-    device = "/dev/nvme0n1p3";
+    device = "/dev/disk/by-uuid/CA5C9C705C9C58D1";
     fsType = "ntfs-3g"; 
-    options = [ "rw" "uid=1000"];
+    options = [ "rw" "uid=1000" ];
+  };
+  fileSystems."/run/media/user/Shared Volume" = {
+    device = "/dev/disk/by-uuid/01DB18EA3AB73260";
+    fsType = "ntfs-3g"; 
+    options = [ "rw" "uid=1000" ];
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -48,14 +48,31 @@ in {
   networking.networkmanager.enable = true;
 
   # NextDNS
-  services.resolved.enable = true;
-  services.myNextDNS = {
-    enable = true;
-    nextdnsId = "b89466"; # Replace with your actual NextDNS ID
+  services = {
+    resolved.enable = true;
+    myNextDNS = {
+      enable = true;
+      nextdnsId = "b89466"; # Replace with your actual NextDNS ID
+    };
   };
 
+  # Mullvad DNS
+  # services.resolved = {
+  #   enable = true;
+  #   extraConfig = ''
+  #     DNS=194.242.2.4#base.dns.mullvad.net
+  #     DNS=2a07:e340::4#base.dns.mullvad.net
+  #     DNSSEC=no
+  #     DNSOverTLS=yes
+  #     Domains=~.
+  #   '';
+  # };
+
   # Mullvad VPN
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn = {
+    enable = true;
+    package = unstablePkgs.mullvad-vpn;
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Bangkok";
@@ -178,7 +195,6 @@ in {
   ] ++ (with unstablePkgs; [
     filen-desktop
     mullvad-browser
-    mullvad-vpn
     brave
     discord
     firefox-esr
