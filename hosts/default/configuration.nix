@@ -173,21 +173,19 @@ in {
     killall
     tree
     ntfs3g
-    firefox-esr
     gnome-software
-    brave
-    mullvad-browser
-    mullvad-vpn
-    tor-browser
-    discord
-    unstablePkgs.
-    spotify
-    davinci-resolve
     #  wget
   ] ++ (with unstablePkgs; [
     filen-desktop
+    mullvad-browser
+    mullvad-vpn
+    brave
+    discord
+    firefox-esr
     vscode
     protonmail-bridge-gui
+    spotify
+    davinci-resolve
   ]);
 
   services.xserver.videoDrivers = ["nvidia"];
