@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
   vimixCursorTheme = {
-    name = "Vimix-Cursors-White";
+    name = "Vimix-Cursors";
     package = pkgs.vimix-cursor-theme;
     size = 30;
   };

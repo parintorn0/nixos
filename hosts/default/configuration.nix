@@ -3,8 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, inputs, ... }:
-
-{
+let
+  unstablePkgs = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true; # if needed
+  };
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -164,28 +168,27 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     neovim
     killall
     tree
     ntfs3g
-    appimage-run
     firefox-esr
     gnome-software
-    gnome-tweaks
-    gnome-themes-extra
-    gtk-engine-murrine
-    vscode
     brave
     mullvad-browser
     mullvad-vpn
     tor-browser
     discord
-    protonmail-bridge-gui
+    unstablePkgs.
     spotify
     davinci-resolve
     #  wget
-  ];
+  ] ++ (with unstablePkgs; [
+    filen-desktop
+    vscode
+    protonmail-bridge-gui
+  ]);
 
   services.xserver.videoDrivers = ["nvidia"];
 
