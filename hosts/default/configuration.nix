@@ -149,16 +149,14 @@ in {
 
 
   # Gnome Exclude Packages
-  environment.gnome.excludePackages = (
-    with pkgs; [
-      epiphany
-      geary
-      atomix
-      gnome-tour
-      gnome-characters
-      gnome-music
-    ]
-  );
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany
+    geary
+    atomix
+    gnome-tour
+    gnome-characters
+    gnome-music
+  ];
 
   services.gnome.gnome-keyring.enable = true;
 
@@ -186,22 +184,13 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
-    neovim
     killall
     tree
     ntfs3g
     gnome-software
     #  wget
   ] ++ (with unstablePkgs; [
-    filen-desktop
     mullvad-browser
-    brave
-    discord
-    firefox-esr
-    vscode
-    protonmail-bridge-gui
-    spotify
-    davinci-resolve
   ]);
 
   services.xserver.videoDrivers = ["nvidia"];
