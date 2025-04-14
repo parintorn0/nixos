@@ -3,7 +3,7 @@ let
   vimixCursorTheme = {
     name = "Vimix-Cursors";
     package = pkgs.vimix-cursor-theme;
-    size = 30;
+    size = 32;
   };
 in
 {
