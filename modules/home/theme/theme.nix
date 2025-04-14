@@ -5,20 +5,21 @@ let
     package = pkgs.vimix-cursor-theme;
     size = 40;
   };
-  orchis-theme = pkgs.callPackage ./orchis-theme {
-    theme = "pink";
-    color = "dark";
-    icon = "nixos";
-    tweaks = ["macos"];
+  orchis-theme = {
+    name = "Orchis-Pink-Dark-Compact";
+      package = pkgs.callPackage ./orchis-theme {
+      theme = "pink";
+      color = "dark";
+      size = "compact";
+      icon = "nixos";
+      tweaks = ["macos"];
+    };
   };
 in
 {
   programs.gnome-shell = {
     enable = true;
-    theme = {
-      name = "Orchis-Pink-Dark";
-      package = orchis-theme;
-    };
+    theme = orchis-theme;
     extensions = [
       { package = pkgs.gnomeExtensions.dash-to-dock; }
       { package = pkgs.gnomeExtensions.blur-my-shell; }
@@ -29,10 +30,7 @@ in
   gtk = {
     enable = true;
     cursorTheme = vimixCursorTheme;
-    theme = {
-      name = "Orchis-Pink-Dark";
-      package = orchis-theme;
-    };
+    theme = orchis-theme;
     iconTheme = {
       name = "Tela-circle-pink-dark";
       package = pkgs.tela-circle-icon-theme.override {
