@@ -7,6 +7,7 @@ let
 in {
 
   imports = [
+    inputs.nvf.homeManagerModules.default
     ../../modules/home
   ];
   # Home Manager needs a bit of information about you and the paths it should
@@ -25,10 +26,6 @@ in {
 
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
-
-  programs.neovim = {
-    enable = true;
-  };
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -51,9 +48,12 @@ in {
   ] ++ (with unstablePkgs; [
     filen-desktop
     brave
+    tor-browser
     discord
     vscode
+    sourcegit
     protonmail-bridge-gui
+    steam
     spotify
     davinci-resolve
   ]);

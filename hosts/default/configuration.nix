@@ -132,21 +132,16 @@ in {
 
   # Flatpak
   services.flatpak.enable = true;
-
+  
   # 1Password
-  programs._1password.enable = true;
-  programs._1password-gui = {
-    enable = true;
-    polkitPolicyOwners = [ "user" ];
+  programs = {
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      package = unstablePkgs._1password-gui;
+      polkitPolicyOwners = [ "user" ];
+    };
   };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
 
   # Gnome Exclude Packages
   environment.gnome.excludePackages = with pkgs; [
