@@ -2,7 +2,7 @@
 let
   orchis-theme = {
     name = "Orchis-Pink-Dark-Compact";
-      package = pkgs.callPackage ./orchis-theme {
+    package = pkgs.callPackage ./orchis-theme {
       theme = "pink";
       color = "dark";
       size = "compact";
@@ -11,9 +11,9 @@ let
     };
   };
   vimix-cursor-theme = {
-    name = "Vimix-Cursors";
-    package = pkgs.vimix-cursor-theme;
-    size = 40;
+    name = "LyraQ-cursors";
+    package = pkgs.lyra-cursors;
+    size = 32;
   };
   tela-circle-icon-theme = {
     name = "Tela-circle-pink-dark";
