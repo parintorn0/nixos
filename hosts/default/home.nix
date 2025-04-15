@@ -53,7 +53,6 @@ in {
     vscode
     sourcegit
     protonmail-bridge-gui
-    steam
     spotify
     davinci-resolve
   ]);
